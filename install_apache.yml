@@ -15,5 +15,7 @@
 
   - name: add php support for apache
     yum:
-      name: libapache2-mod-php
+      name: php
       state: latest
+    when: ansible_distribution in ["Ubuntu","Debian"] 
+      #when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "8.2" 

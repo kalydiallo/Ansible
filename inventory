@@ -1,5 +1,9 @@
+[web_servers]
 node1
 node2
+
+[db_servers]
 node3
 
+#[file_servers]
 #node4

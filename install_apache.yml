@@ -4,18 +4,13 @@
   become: true
   tasks:
 
-  - name: update repo index
+  - name: Install apache and php packages
     yum:
+      name: 
+        - httpd
+        - php
+      state: latest
       update_cache: yes
-
-  - name: Install apache2 package
-    yum:
-      name: httpd
-      state: latest
-
-  - name: add php support for apache
-    yum:
-      name: php
-      state: latest
-    when: ansible_distribution in ["Ubuntu","Debian"] 
+  
+    when: ansible_distribution in ["Ubuntu","CentOs"] 
       #when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "8.2" 

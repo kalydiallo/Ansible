@@ -1,0 +1,61 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Install updates (Redhat)
+    yum:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "RedHat"
+
+  - name: install updates (Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu" 
+
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: Install apache and php packages
+    yum:
+      name: 
+        - httpd
+        - php
+      state: latest
+  
+    when: ansible_distribution in ["Ubuntu","CentOS"] 
+      #when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "8.2" 
+      
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: Install mariadb package (Redhat)
+    yum:
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "RedHat"
+  
+  - name: Install mariadb package (Ubuntu)
+    yum:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: Install samba package 
+    yum:
+      name: samba
+      state: latest
+
